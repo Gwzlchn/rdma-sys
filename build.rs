@@ -40,10 +40,12 @@ fn main() {
         println!("include paths: {:?}", include_paths);
     }
 
-    let include_args = include_paths.iter().map(|p| format!("-I{}", p));
+    //let include_args = include_paths.iter().map(|p| format!("-I{}", p));
 
     let bindings = bindgen::Builder::default()
-        .clang_args(include_args)
+        //.clang_args(include_args)
+        .clang_arg("-I../rust-librxe/librxe-sys/vendor/rdma-core/build/include/")
+        .clang_arg("-I../rust-librxe/librxe-sys/vendor/rdma-core/")
         .header("src/bindings.h")
         .allowlist_function("ibv_.*")
         .allowlist_type("ibv_.*")
@@ -143,7 +145,7 @@ fn main() {
         // note: see issue #55149 <https://github.com/rust-lang/rust/issues/55149> for more information
         .derive_copy(true)
         .derive_debug(false)
-        .derive_default(false)
+        .derive_default(true)
         .generate_comments(false)
         //.generate_inline_functions(true)
         //.default_macro_constant_type(bindgen::MacroTypeVariation::Unsigned)
